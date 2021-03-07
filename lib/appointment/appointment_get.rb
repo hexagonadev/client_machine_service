@@ -1,7 +1,7 @@
 class AppointmentGet
 
-  def index(1)
-    response = RestClient.get("localhost:3000/users/#{id}/appoinments", { accept: 'application/json' })
+  def index(user_id)
+    response = RestClient.get("localhost:3000/users/#{user_id}/appointments", { accept: 'application/json' })
     appoinments = JSON.parse(response.body)
     puts appoinments.inspect
     appoinments['appoinments'].each do |appointment|
@@ -12,7 +12,7 @@ class AppointmentGet
   end
 
   def show(id)
-    appointment = RestClient.get("localhost:3000/appoinments/#{id}", { accept: 'application/json' })
+    appointment = RestClient.get("localhost:3000/appointments/#{id}", { accept: 'application/json' })
     puts appointment
   end
 end

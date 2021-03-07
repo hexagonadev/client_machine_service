@@ -10,6 +10,8 @@ require_relative "vehicle/vehicle_post"
 require_relative "vehicle/vehicle_put"
 require_relative "vehicle/vehicle_delete"
 require_relative "appointment/appointment_get"
+require_relative "appointment/appointment_post"
+
 
 module ClientMachineService
   class Error < StandardError; end
@@ -26,13 +28,17 @@ module ClientMachineService
     #   puts "-------------------"
     # end
   end
-   #puts UserPost.new.create('m', 'perez', 'l@hugu.com')
+   #puts UserPost.new.create('m', 'perez', 'l@hftugu.com')
    #puts UserGet.new.index
-  #puts UserDelete.new.destroy(5)
-  #puts UserPut.new.update(1,'petra', 'perez', 'mire@gmail.com')
-  #puts VehiclePost.new.create(2, 'toyota', 'corolla', '1.6', '2008', 'negro', 'ylr62l', 'carro')
-  #puts VehicleGet.new.show(1)
-  #puts VehicleGet.new.index(2)
-   #puts VehicleDelete.new.destroy(1)
-   puts AppointmentGet.new.index(1)
+   #puts UserGet.new.show(3)
+   #puts UserDelete.new.destroy(4)
+   #puts UserPut.new.update(1, {name: 'petra', last_name: 'perez', emal: 'mire@gmail.com'})
+   #puts VehiclePost.new.create({ user_id: '2', brand: 'toyota', model: 'corolla', engine_size: '1.6', year: '2008', color: 'negro', vin: 'ylr62l', kind: 'carro' })
+   #puts VehicleGet.new.show(4)
+   #puts VehicleGet.new.index(3)
+   #puts VehicleDelete.new.destroy(6)
+   #puts VehiclePut.new.update(7, {brand: 'chevrolet', engine_size: '1.8'})
+   #puts AppointmentGet.new.index(1)
+   #puts AppointmentGet.new.show(1)
+   puts AppointmentPost.new.create(2, { user_id: '2', vehicle_id: '7', description: 'cambio de frenos', apppintment_date: '01/04/21'})
 end
