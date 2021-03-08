@@ -5,7 +5,7 @@ class UserGet
     users = JSON.parse(response.body)
     puts users.inspect
     users['users'].each do |user|
-      puts user ['id']
+      puts user['id']
       puts user['name']
       puts user['last_name']
       puts user['email']

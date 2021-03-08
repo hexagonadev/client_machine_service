@@ -4,7 +4,8 @@ class AppointmentGet
     response = RestClient.get("localhost:3000/users/#{user_id}/appointments", { accept: 'application/json' })
     appoinments = JSON.parse(response.body)
     puts appoinments.inspect
-    appoinments['appoinments'].each do |appointment|
+
+    appoinments["appointments"].each do |appointment|
       puts appointment['appointment_date']
       puts appointment['description']
       puts "-------------------"
