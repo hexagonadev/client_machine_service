@@ -4,11 +4,14 @@ require "rest-client"
 require_relative "users"
 require_relative "vehicles"
 require_relative "appointments"
+require_relative "menu/display"
 
 module ClientMachineService
   class Error < StandardError; end
 
   def self.start
+    #Display.start
+
     #response = RestClient.get('localhost:3000/users', { accept: 'application/json' })
     #users = JSON.parse(response.body)
     #puts users.inspect
@@ -20,9 +23,18 @@ module ClientMachineService
     #  puts "-------------------"
     #end
 
-    #User.index
-    #User.show(4)
+    #users = User.index
+    #users.first.delete
+
+
+    #user = User.new
+    #user.name = get.chop
+
+    User.index(search: {email: 'ca@ca.com'})
+    #user.save
+    #User.show(id: 3)
     #User.create(name: 'example2', last_name: 'hola2', email: '2daprueba@mail')
+    #User.update(name: 'example2', last_name: 'hola2', email: '2daprueba@mail')
     #User.delete(3)
 
     #Vehicle.index(4)

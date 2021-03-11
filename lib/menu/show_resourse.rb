@@ -1,0 +1,3 @@
+class ShowResourse
+
+end
