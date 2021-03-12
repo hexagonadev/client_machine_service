@@ -10,7 +10,7 @@ module ClientMachineService
   class Error < StandardError; end
 
   def self.start
-    #Display.start
+    Display.start
 
     #response = RestClient.get('localhost:3000/users', { accept: 'application/json' })
     #users = JSON.parse(response.body)
@@ -30,7 +30,7 @@ module ClientMachineService
     #user = User.new
     #user.name = get.chop
 
-    User.index(search: {email: 'ca@ca.com'})
+    #User.index(search: {email: 'ca@ca.com'})
     #user.save
     #User.show(id: 3)
     #User.create(name: 'example2', last_name: 'hola2', email: '2daprueba@mail')

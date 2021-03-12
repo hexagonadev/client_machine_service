@@ -25,7 +25,7 @@ class MakeAppointment
             SI: 1 / NO: 2"
         found = false
       else
-        appointment.errors.full_messages.each {|message| puts message}
+        appointment.errors.each{|message| puts message}
 
       end
     end
@@ -45,12 +45,14 @@ class MakeAppointment
     while valid do
       puts "Usuario (email):"
       email = gets.chomp
-      user = User.find_by(email: email)
+      search = {search: {email: email}}
+      user = User.index(search)
+
       if user != nil
-        appointment.user_id = user.id
+        appointment.user_id = user[0].id
         valid = false
       else
-        puts appointment.errors.full_message(:user_id, 'este usuario no existe, intente de nuevo')
+        puts appointment.errors(:user_id, 'este usuario no existe, intente de nuevo')
       end
 
     end
@@ -62,12 +64,14 @@ class MakeAppointment
     while valid do
       puts "Indique la placa de su Vehiculo"
       vin = gets.chomp
-      vehicle = Vehicle.find_by(vin: vin)
+      search = {search: {vin: vin}}
+      vehicle = Vehicle.index(appointment.user_id, search)
+
       if vehicle != nil
-       appointment.vehicle_id = vehicle.id
+       appointment.vehicle_id = vehicle[0].id
        valid = false
       else
-        puts appointment.errors.full_message(:user_id, 'esta placa no se encuentra registrada, intente de nuevo')
+        puts appointment.errors(:vehicle_id, 'esta placa no se encuentra registrada, intente de nuevo')
       end
     end
   end

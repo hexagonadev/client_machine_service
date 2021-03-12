@@ -1,12 +1,10 @@
 
 class User
   attr_accessor :id, :name, :last_name, :email, :errors
-  @@header = { accept: 'application/json'}
 
   def self.index(search = {})
     response = RestClient.get("localhost:3000/users/", { accept: 'application/json', params: search})
     users = JSON.parse(response.body)
-    puts users
     users['users'].map do |user|
       User.new(user)
     end
@@ -15,7 +13,7 @@ class User
   #s = {search: {email: e}}
 
   def self.show(id)
-    response = RestClient.get("localhost:3000/users/#{id[:id]}",  @@header )
+    response = RestClient.get("localhost:3000/users/#{id[:id]}", { accept: 'application/json'} )
     user = JSON.parse(response.body)
     puts user.inspect
 

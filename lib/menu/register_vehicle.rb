@@ -28,16 +28,17 @@ class RegisterVehicle
 
   def user_valid(vehicle)
     value = true
-
     while value do
       puts "Usuario (email):"
       email = gets.chomp
-      user = User.find_by(email: email)
+      search = {search: {email: email}}
+      user = User.index(search)
+
       if user != nil
-       vehicle.user_id = user.id
+       vehicle.user_id = user[0].id
         value = false
       else
-        puts vehicle.errors.full_message(:user_id, 'este usuario es invalido, intente de nuevo')
+        puts vehicle.errors(:user_id, 'este usuario es invalido, intente de nuevo')
       end
     end
   end
