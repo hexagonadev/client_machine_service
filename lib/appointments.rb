@@ -1,19 +1,19 @@
 class Appointment
   attr_accessor :id, :user_id, :vehicle_id, :description, :appointment_date, :errors
 
-  def self.index(user_id)
-    response = RestClient.get("localhost:3000/users/#{user_id}/appointments", { accept: 'application/json' })
+  def self.index(user_id, search = {})
+    response = RestClient.get("localhost:3000/users/#{user_id}/appointments", { accept: 'application/json', params: search})
     appointments = JSON.parse(response.body)
-    appointments['appointments'].map do |appointment|
+
+    appointments['appointment'].map do |appointment|
       Appointment.new(appointment)
     end
   end
 
   def self.show(id)
     response = RestClient.get("localhost:3000/appointments/#{id}", { accept: 'application/json' })
-    appointments = JSON.parse(response.body)
-    puts appointments.inspect
-
+    attributes = JSON.parse(response.body)
+    Appointment.new(attributes['appointment'])
   end
 
   def self.create(user_id, params)
@@ -42,7 +42,7 @@ class Appointment
     @vehicle_id = options['vehicle_id']
     @description = options['description']
     @appointment_date = options['appointment_date']
-    @errors = options['errors']
+    @errors = options['errors'] || []
   end
 
 
@@ -60,6 +60,45 @@ class Appointment
       true
     else
       false
+    end
+  end
+
+  def show
+    appointment = Appointment.show(self.id)
+    commit_appointment(appointment)
+
+    if appointment.errors.any?
+      false
+    else
+      true
+    end
+  end
+
+  def update
+    params = {
+      vehicle_id: @vehicle_id,
+      description: @description,
+      appointment_date: appointment_date
+    }
+
+    appointment = Appointment.update(self.id, params)
+    commit_appointment(appointment)
+
+    if appointment.errors.any?
+      false
+    else
+      true
+    end
+  end
+
+  def delete
+    appointment = Appointment.delete(self.id)
+    commit_appointment(appointment)
+
+    if appointment.errors.any?
+      false
+    else
+      true
     end
   end
 

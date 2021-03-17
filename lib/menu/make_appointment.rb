@@ -39,7 +39,6 @@ class MakeAppointment
   end
 
   def search_user(appointment)
-
     valid = true
 
     while valid do

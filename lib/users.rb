@@ -13,10 +13,9 @@ class User
   #s = {search: {email: e}}
 
   def self.show(id)
-    response = RestClient.get("localhost:3000/users/#{id[:id]}", { accept: 'application/json'} )
-    user = JSON.parse(response.body)
-    puts user.inspect
-
+    response = RestClient.get("localhost:3000/users/#{id}", { accept: 'application/json'} )
+    attributes = JSON.parse(response.body)
+    User.new(attributes['user'])
   end
 
   def self.create(params)
@@ -35,13 +34,13 @@ class User
 
   def self.update(id, params)
     payload = params
-    response = RestClient.put("localhost:3000/users/#{id[:id]}", payload.to_json, {content_type: :json, accept: :json})
+    response = RestClient.put("localhost:3000/users/#{id}", payload.to_json, {content_type: :json, accept: :json})
     attributes = JSON.parse(response.body)
     User.new(attributes['user'])
   end
 
   def self.delete(id)
-    response = RestClient.delete("localhost:3000/users/#{id[:id]}", @@header )
+    response = RestClient.delete("localhost:3000/users/#{id}", { accept: 'application/json'} )
     attributes = JSON.parse(response.body)
     User.new(attributes['user'])
   end
@@ -51,7 +50,7 @@ class User
     @name = options['name']
     @last_name = options['last_name']
     @email = options['email']
-    @errors = options['errors']
+    @errors = options['errors'] || []
   end
 
 
@@ -81,7 +80,7 @@ class User
     user = User.update(self.id, params)
     commit_user(user)
 
-    if user.error.any?
+    if user.errors.any?
       false
     else
       true
@@ -92,7 +91,7 @@ class User
     user = User.delete(self.id)
     commit_user(user)
 
-    if user.error.any?
+    if user.errors.any?
       false
     else
       true
@@ -102,17 +101,21 @@ class User
   def show
     user = User.show(self.id)
     commit_user(user)
+
+    if user.errors.any?
+      false
+    else
+      true
+    end
   end
 
   private
 
   def commit_user(resource)
-
-    user           = resource
-    self.id        = user.id
-    self.name      = user.name
-    self.last_name = user.last_name
-    self.email     = user.name
-    self.errors    = user.errors
+    self.id        = resource.id
+    self.name      = resource.name
+    self.last_name = resource.last_name
+    self.email     = resource.email
+    self.errors    = resource.errors
   end
 end

@@ -2,7 +2,7 @@ class Vehicle
   attr_accessor :id, :kind, :brand, :model, :engine_size, :year, :color, :vin, :user_id, :errors
 
   def self.index(user_id, search = {})
-    puts user_id.inspect
+
     response = RestClient.get("localhost:3000/users/#{user_id}/vehicles", { accept: 'application/json', params: search} )
     vehicles = JSON.parse(response.body)
     vehicles['vehicles'].map do |vehicle|
@@ -11,10 +11,9 @@ class Vehicle
   end
 
   def self.show(id)
-    response = RestClient.get("localhost:3000/vehicles/#{id[:id]}", { accept: 'application/json'})
-    vehicle = JSON.parse(response.body)
-    puts vehicle.inspect
-
+    response = RestClient.get("localhost:3000/vehicles/#{id}", { accept: 'application/json'})
+    attributes = JSON.parse(response.body)
+    Vehicle.new(attributes['vehicle'])
   end
 
   def self.create(user_id, params)
@@ -27,14 +26,14 @@ class Vehicle
 
   def self.update(id, params)
     payload = params
-    response = RestClient.put("localhost:3000/vehicles/#{id[:id]}", payload.to_json, {content_type: :json, accept: :json})
-    vehicle = JSON.parse(response.body)
+    response = RestClient.put("localhost:3000/vehicles/#{id}", payload.to_json, {content_type: :json, accept: :json})
+    attributes = JSON.parse(response.body)
     Vehicle.new(attributes['vehicle'])
   end
 
   def self.delete(id)
-    response = RestClient.delete("localhost:3000/vehicles/#{id[:id]}", { accept: 'application/json' })
-    vehicle = JSON.parse(response.body)
+    response = RestClient.delete("localhost:3000/vehicles/#{id}", { accept: 'application/json' })
+    attributes = JSON.parse(response.body)
     Vehicle.new(attributes['vehicle'])
   end
 
@@ -48,7 +47,7 @@ class Vehicle
     @color = options['color']
     @vin = options['vin']
     @user_id = options['user_id']
-    @errors = options['errors']
+    @errors = options['errors'] || []
   end
 
   def save
@@ -62,7 +61,7 @@ class Vehicle
       vin: @vin,
       user_id: @user_id
     }
-    vehicle = Vehicle.create(user_id, params)
+    vehicle = Vehicle.create(id, params)
 
     commit_vehicle(vehicle)
 
@@ -87,7 +86,7 @@ class Vehicle
     vehicle = Vehicle.update(self.id, params)
     commit_vehicle(vehicle)
 
-    if vehicle.error.any?
+    if vehicle.errors.any?
       false
     else
       true
@@ -98,7 +97,7 @@ class Vehicle
     vehicle = Vehicle.delete(self.id)
     commit_vehicle(vehicle)
 
-    if vehicle.error.any?
+    if vehicle.errors.any?
       false
     else
       true
@@ -108,7 +107,11 @@ class Vehicle
   def show
     vehicle = Vehicle.show(self.id)
     commit_vehicle(vehicle)
-
+    if vehicle.errors.any?
+      false
+    else
+      true
+    end
   end
 
   private

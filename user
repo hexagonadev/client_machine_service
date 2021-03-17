@@ -1,0 +1,33 @@
+
+[1mFrom:[0m /home/loiret/proyectoshexa/client_machine_service/lib/menu/update_resourse.rb:42 UpdateResourse#update_user:
+
+    [1;34m28[0m: [32mdef[0m [1;34mupdate_user[0m
+    [1;34m29[0m:   value = [1;36mtrue[0m
+    [1;34m30[0m: 
+    [1;34m31[0m:   [32mwhile[0m value
+    [1;34m32[0m:     user = [1;34;4mUser[0m.new
+    [1;34m33[0m:     find_user(user)
+    [1;34m34[0m:     puts [31m[1;31m"[0m[31mIngrese su datos actualiados[1;31m"[0m[31m[0m
+    [1;34m35[0m:     puts [31m[1;31m"[0m[31mEmail:[1;31m"[0m[31m[0m
+    [1;34m36[0m:     user.email = gets.chomp
+    [1;34m37[0m:     puts [31m[1;31m"[0m[31mNombre:[1;31m"[0m[31m[0m
+    [1;34m38[0m:     user.name = gets.chomp
+    [1;34m39[0m:     puts [31m[1;31m"[0m[31mApellido:[1;31m"[0m[31m[0m
+    [1;34m40[0m:     user.last_name = gets.chomp
+    [1;34m41[0m:     binding.pry
+ => [1;34m42[0m:     [32mif[0m user.update
+    [1;34m43[0m: 
+    [1;34m44[0m:       system([31m[1;31m'[0m[31mclear[1;31m'[0m[31m[0m)
+    [1;34m45[0m:       puts [31m[1;31m"[0m[31m[1;31m"[0m[31m[0m
+    [1;34m46[0m:       puts [31m[1;31m"[0m[31mUsuario ACTUALIZADO con exito[1;31m"[0m[31m[0m
+    [1;34m47[0m:       puts [31m[1;31m"[0m[31m[1;31m"[0m[31m[0m
+    [1;34m48[0m:       puts [31m[1;31m"[0m[31mBienvenid@, usuario:#{user.email}[0m[31m[0m
+    [1;34m49[0m:             ¿Desea volver al menu [35mSI[0m: [1;34m1[0m / [35mNO[0m: [1;34m2[0m[31m[1;31m"[0m[31m[0m
+    [1;34m50[0m:       value = [1;36mfalse[0m
+    [1;34m51[0m:     [32melse[0m
+    [1;34m52[0m:       user.errors.each {|message| puts message}
+    [1;34m53[0m:       puts [31m[1;31m"[0m[31m[1;31m"[0m[31m[0m
+    [1;34m54[0m:     [32mend[0m
+    [1;34m55[0m:   [32mend[0m
+    [1;34m56[0m: [32mend[0m
+
