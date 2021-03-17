@@ -67,11 +67,10 @@ class Appointment
     appointment = Appointment.show(self.id)
     commit_appointment(appointment)
 
-    if appointment.errors.any?
-      false
-    else
-      true
-    end
+    puts "ID Usuario:  #{user_id}"
+    puts "ID Vehiculo: #{vehicle_id}"
+    puts "Fecha:       #{appointment_date}"
+    puts "Descripcion: #{description}"
   end
 
   def update

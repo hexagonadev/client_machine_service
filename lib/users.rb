@@ -102,11 +102,9 @@ class User
     user = User.show(self.id)
     commit_user(user)
 
-    if user.errors.any?
-      false
-    else
-      true
-    end
+    puts "Name:     #{name}"
+    puts "Apellido: #{last_name}"
+    puts "Email:    #{email}"
   end
 
   private

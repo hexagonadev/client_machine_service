@@ -107,11 +107,14 @@ class Vehicle
   def show
     vehicle = Vehicle.show(self.id)
     commit_vehicle(vehicle)
-    if vehicle.errors.any?
-      false
-    else
-      true
-    end
+
+    puts "Kind:     #{kind}"
+    puts "Brand:    #{brand}"
+    puts "Model:    #{model}"
+    puts "Motor:    #{engine_size}"
+    puts "Año:      #{year}"
+    puts "Color:    #{color}"
+    puts "Placa:    #{vin}"
   end
 
   private
